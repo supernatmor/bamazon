@@ -63,6 +63,8 @@ function queryServer() {
                     }
                 ]);
 
+                connection.end();
+
                	
             }
         });
