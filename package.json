@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/supernatmor/bamazon#readme",
   "dependencies": {
+    "inquirer": "^4.0.0",
     "mysql": "^2.15.0"
   }
 }
