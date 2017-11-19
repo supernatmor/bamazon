@@ -3,6 +3,7 @@ var inquirer = require("inquirer");
 
 var want;
 var amount;
+var orderTotal;
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -43,14 +44,17 @@ function queryServer() {
             }
 
         ]).then(function(cust) {
-            want = parseInt(cust.id - 1);
+            want = parseInt(cust.id);
             amount = parseInt(cust.amount);
 
-            if (result[want].stock < amount) {
+            if (result[want - 1].stock < amount) {
                 console.log("Insufficient stock for that order...");
 
             } else {
-                var newStock = result[want].stock - amount;
+            	orderTotal = result[want -1].price * amount;
+            	console.log("Your total cost is: $" + orderTotal);
+                var newStock = result[want -1].stock - amount;
+
                 connection.query("UPDATE products SET ? WHERE ?", [{
                         stock: newStock
                     },
@@ -58,13 +62,13 @@ function queryServer() {
                         item_id: want
                     }
                 ]);
-               	console.log()
+
+               	
             }
         });
 
 
     });
-connection.end();
 }
 
 queryServer();
